@@ -5,7 +5,7 @@ Prerequisite
 -
 1. run <code>echo "export DIMMER=/dev/\<your-dimmer-device>" >> ~/.bashrc</code>   
 replace <code>\<your-dimmer-device></code> for your device name.
-2. install dependencies
+2. install dependencies   
 <code>npm install serialport argparse</code>
 
 Usage
