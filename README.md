@@ -6,6 +6,10 @@ Prerequisite
 1. run <code>echo "export DIMMER=/dev/\<your-dimmer-device>" >> ~/.bashrc</code>   
 replace <code>\<your-dimmer-device></code> for your device name.
 
+Install dependencies
+-
+npm install serialport argparse
+
 Usage
 -
 1. <code>-s N</code> set a new brightness value.   
