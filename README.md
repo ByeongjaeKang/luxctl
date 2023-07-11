@@ -8,7 +8,7 @@ replace <code>\<your-dimmer-device></code> for your device name.
 
 Install dependencies
 -
-npm install serialport argparse
+<code>npm install serialport argparse</code>
 
 Usage
 -
