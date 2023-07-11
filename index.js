@@ -79,7 +79,7 @@ async function processArgs() {
             .catch((e) => { return e })
 
         response ?
-            console.log(`💡 current brightness is ${raw2perc(response)}%.`)
+            console.log(`💡 current brightness is at ${raw2perc(response)}%.`)
             : console.error('something went wrong.')
 
         process.exit()
@@ -90,7 +90,7 @@ async function processArgs() {
             .catch((e) => { return e })
 
         response ?
-            console.log(`🔍 current power-on brightness value on EEPROM is ${raw2perc(response)}%.`)
+            console.log(`🔍 current power-on brightness value on EEPROM is at ${raw2perc(response)}%.`)
             : console.error('something went wrong.')
 
         process.exit()
