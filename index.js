@@ -1,5 +1,6 @@
 const { ArgumentParser } = require('argparse')
 const { SerialPort } = require('serialport')
+const strings = require(`./${process.env.LANGUAGE.split(':')[1]}.js`)
 
 const PROG_NAME = 'luxctl'
 const VERSION = '1.0'
@@ -10,20 +11,22 @@ const DIMMER = process.env.DIMMER
 
 const dimmer = new SerialPort({ path: DIMMER, baudRate: 115200 })
 
-const parser = new ArgumentParser({ prog: PROG_NAME, description: 'Control brightness of monitor ambient light.', epilog: 'all brightness value on luxctl is a percentage number.' })
+const parser = new ArgumentParser({ prog: PROG_NAME, description: strings.prog_description,
+    epilog: strings.epilog, add_help: false })
 const group = parser.add_mutually_exclusive_group()
 
 group.add_argument('-s', {
     metavar: 'N', type: 'int', nargs: 1,
-    help: 'set a new brightness value.'
+    help: strings.opts.s
 })
 group.add_argument('-se', {
     metavar: 'N', type: 'int', nargs: 1,
-    help: 'write new initial brightness to EEPROM.'
+    help: strings.opts.se
 })
-group.add_argument('-r', { action: 'store_true', help: 'read current brightness from dimmer.' })
-group.add_argument('-re', { action: 'store_true', help: 'read current initial brightness from EEPROM.' })
-group.add_argument('-v', { action: 'version', version: `${PROG_NAME} ${VERSION} of ${BUILD_DATE}, by ${AUTHOR}` })
+group.add_argument('-r', { action: 'store_true', help: strings.opts.r })
+group.add_argument('-re', { action: 'store_true', help: strings.opts.re })
+group.add_argument('-v', { action: 'version', version: `${PROG_NAME} ${VERSION} of ${BUILD_DATE}, by ${AUTHOR}`, help: strings.opts.v })
+group.add_argument('-h', '--help', { action: 'help', help: strings.opts.h })
 
 let args = parser.parse_args()
 
@@ -57,8 +60,8 @@ async function processArgs() {
             .catch((e) => { return e })
 
         response ?
-            console.log(`💡 brightness has been set to ${args.s}%.`)
-            : console.error('something went wrong.')
+            console.log(`${strings.result.s}${args.s}%`)
+            : console.error(strings.error.unknown)
 
         process.exit()
 
@@ -68,8 +71,8 @@ async function processArgs() {
             .catch((e) => { return e })
 
         response ?
-            console.log(`💾 power-on brightness value on EEPROM has been set to ${args.se}%.`)
-            : console.error('something went wrong.')
+            console.log(`${strings.result.se}${args.se}%`)
+            : console.error(strings.error.unknown)
 
         process.exit()
 
@@ -79,8 +82,8 @@ async function processArgs() {
             .catch((e) => { return e })
 
         response ?
-            console.log(`💡 current brightness is at ${raw2perc(response)}%.`)
-            : console.error('something went wrong.')
+            console.log(`${strings.result.r}${raw2perc(response)}%`)
+            : console.error(strings.error.unknown)
 
         process.exit()
 
@@ -90,8 +93,8 @@ async function processArgs() {
             .catch((e) => { return e })
 
         response ?
-            console.log(`🔍 current power-on brightness value on EEPROM is at ${raw2perc(response)}%.`)
-            : console.error('something went wrong.')
+            console.log(`${strings.result.re}${raw2perc(response)}%`)
+            : console.error(strings.error.unknown)
 
         process.exit()
 
